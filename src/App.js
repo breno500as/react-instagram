@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import './App.css';
+import Header from './component/Header';
+import Timeline from './component/Timeline';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-      
+    <div id="root">
+      <div className="main">
+        <Header/>
+        <Timeline/>
       </div>
+    </div>
     );
   }
 }
