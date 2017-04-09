@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
+import {browserHistory} from  'react-router';
+
 
 export default class Header extends Component {
+
+   constructor(){
+    super();
+    this.logout.bind(this);
+   }
+
+   logout(event) {
+     event.preventDefault();
+     localStorage.removeItem('auth-token');
+     browserHistory.push('/');
+   }
 
     render(){
         return (
@@ -26,6 +39,9 @@ export default class Header extends Component {
               </li>
             </ul>
           </nav>
+             
+          <input type="button" onClick={this.logout} value="Logout"></input>
+
         </header>            
         );
     }

@@ -1,0 +1,5 @@
+input[type='submit'] , input[type='button']  {
+    background: #3897f0;
+    border-color: #3897f0;
+    color: white;    
+}

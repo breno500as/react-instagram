@@ -8,14 +8,37 @@ export default class Timeline extends Component {
    constructor() {
        super();
        this.state = {listaFotos:[]};
+       this.publicUser = '';
    }
 
-   componentDidMount(){
-       fetch('http://localhost:8080/api/public/fotos/rafael')
+   checkProfile() {
+      
+      let url = '';
+      
+       if (this.publicUser !== undefined && this.publicUser !== '') {
+         url  = `http://localhost:8080/api/public/fotos/${this.publicUser}`;
+       } else {
+         url =  `http://localhost:8080/api/fotos?X-AUTH-TOKEN=${localStorage.getItem('auth-token')}`;
+       }
+     
+       fetch(url)
         .then(response => response.json())
         .then(fotos => {
            this.setState({listaFotos:fotos});
         })
+           
+   }
+
+   componentDidMount(){
+      this.checkProfile();
+   }
+
+   componentWillReceiveProps(nextProps) {
+
+       if(nextProps.publicUser !== undefined){
+        this.publicUser = nextProps.publicUser;
+        this.checkProfile();
+      }
    }
 
     render(){
