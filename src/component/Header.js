@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import {browserHistory} from  'react-router';
+import Pubsub from 'pubsub-js';
 
 
 export default class Header extends Component {
+
+   pesquisa(event){
+      event.preventDefault();
+      fetch(`http://localhost:8080/api/public/fotos/${this.loginPesquisado.value}`)
+        .then(response => response.json())
+        .then(fotos => {
+          Pubsub.publish('timeline',fotos);
+        });
+    }
 
    constructor(){
     super();
@@ -22,9 +32,9 @@ export default class Header extends Component {
             Instalura
           </h1>
 
-          <form className="header-busca">
-            <input type="text" name="search" placeholder="Pesquisa" className="header-busca-campo"/>
-            <input type="submit" value="Buscar" className="header-busca-submit"/>
+          <form className="header-busca" onSubmit={this.pesquisa.bind(this)}>
+            <input type="text" name="search" ref={input => this.loginPesquisado = input} placeholder="Pesquisa" className="header-busca-campo"/>
+            <input type="submit" value="Buscar"  className="header-busca-submit"/>
           </form>
 
 

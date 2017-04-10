@@ -2,12 +2,25 @@ import React, { Component } from 'react';
 import {Link} from 'react-router'
 
 class FotoAtualizacoes extends Component {
+    
+    like(event){
+      event.preventDefault();      
+      //chama o método like de timeline
+      this.props.like(this.props.foto.id);
+    }
+
+    comenta(event){
+      event.preventDefault();
+      //chama o método comenta de timeline
+      this.props.comenta(this.props.foto.id,this.comentario.value);
+    }
+
     render(){
         return (
             <section className="fotoAtualizacoes">
-              <a href="#" className="fotoAtualizacoes-like">Likar</a>
-              <form className="fotoAtualizacoes-form">
-                <input type="text" placeholder="Adicione um comentário..." className="fotoAtualizacoes-form-campo"/>
+              <a onClick={this.like.bind(this)} className={this.props.foto.likeada ? 'fotoAtualizacoes-like-ativo' : 'fotoAtualizacoes-like'}>Likar</a>
+              <form className="fotoAtualizacoes-form" onSubmit={this.comenta.bind(this)}>
+                <input type="text" placeholder="Adicione um comentário..." ref={(input) => this.comentario = input} className="fotoAtualizacoes-form-campo"/>
                 <input type="submit" value="Comentar!" className="fotoAtualizacoes-form-submit"/>
               </form>
             </section>            
@@ -76,7 +89,7 @@ export default class FotoItem extends Component {
             <FotoHeader header={this.props.foto}/>
             <img alt="foto" className="foto-src" src={this.props.foto.urlFoto}/>
             <FotoInfo info={this.props.foto}/>
-            <FotoAtualizacoes/>
+            <FotoAtualizacoes {... this.props}/>
           </div>            
         );
     }
