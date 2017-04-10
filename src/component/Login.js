@@ -45,8 +45,8 @@ export default class Login extends Component {
                 <h1 className="header-logo">Instalura</h1>
                 <span>{this.state.msg}</span>
                 <form onSubmit={this.envia.bind(this)}>
-                    <input type="text" ref={(input) => this.login = input}/>
-                    <input type="password" ref={(input) => this.senha = input}/>
+                    <input type="text"  placeholder="user" ref={(input) => this.login = input}/>
+                    <input type="password" placeholder="password" ref={(input) => this.senha = input}/>
                     <input type="submit" value="login"/>
                 </form>
             </div>
