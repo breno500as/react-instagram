@@ -6,31 +6,38 @@ import './css/reset.css';
 import './css/timeline.css';
 import './css/login.css';
 import './css/app.css';
-import {matchPattern} from 'react-router/lib/PatternUtils';
-import {Router, Route, browserHistory} from 'react-router'
+import {timeline} from './reducers/timeline'
+import {notificacao} from './reducers/header';
+import { matchPattern } from 'react-router/lib/PatternUtils'
+import { Router, Route, browserHistory } from 'react-router'
+import thunkMiddleware from 'redux-thunk';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { Provider } from 'react-redux'
 
-function checkLoggedUser(nextState,replace) {
+const reducers = combineReducers({ timeline: timeline, notificacao: notificacao });
+const store = createStore(reducers, applyMiddleware(thunkMiddleware));
+
+function checkLoggedUser(nextState, replace) {
 
   //verifica se foi digitado algo depois da timeline para acessar o perfil publico
   //se não cobra o token para acesso privado
-  const resultado = matchPattern('/timeline(/:publicUser)',nextState.location.pathname);
+  const resultado = matchPattern('/timeline(/:publicUser)', nextState.location.pathname);
   const enderecoPrivadoTimeline = resultado.paramValues[0] === undefined;
 
- 
-   if(enderecoPrivadoTimeline && localStorage.getItem('auth-token') === null) {
-     replace("/?msg=Sessão encerrada.Fineza efetuar o login");
-   }
+
+  if (enderecoPrivadoTimeline && localStorage.getItem('auth-token') === null) {
+    replace("/?msg=Sessão encerrada.Fineza efetuar o login");
+  }
 
 }
 
 ReactDOM.render(
-   
-   <Router history={browserHistory}>
-     
+  <Provider store={store}>
+    <Router history={browserHistory}>
       <Route path="/" component={Login} />
       <Route path="/timeline(/:publicUser)" component={App} onEnter={checkLoggedUser} />
-     
-   </Router>
+    </Router>
+  </Provider>
   ,
   document.getElementById('root')
 );
