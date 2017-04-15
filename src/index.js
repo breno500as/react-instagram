@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Login from './component/Login';
-import './css/reset.css';
-import './css/timeline.css';
-import './css/login.css';
-import './css/app.css';
+import Login from './components/Login';
+import './styles/reset.css';
+import './styles/timeline.css';
+import './styles/login.css';
+import './styles/app.css';
 import {timeline} from './reducers/timeline'
 import {notificacao} from './reducers/header';
 import { matchPattern } from 'react-router/lib/PatternUtils'

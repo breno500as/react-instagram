@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Header from './component/Header';
-import Timeline from './component/Timeline';
+import Header from './components/Header';
+import Timeline from './components/Timeline';
 
 
 
